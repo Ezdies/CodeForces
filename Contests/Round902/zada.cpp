@@ -20,21 +20,26 @@ void solve(Resident *residents, const int n, const int chanekCost)
     int totalShares = 0;
     int cost = 0;
 
-    for (int i = 0; i < n;)
+    for (int i = 0; i < n; i++)
     {
-        if (totalShares < n)
+        if (residents[i].costOfShare > chanekCost)
         {
-            cost += residents[i].costOfShare * residents[i].numberOfShares;
-            totalShares += residents[i].numberOfShares;
-            i++;
-        }
-        else
-        {
-            i++;
+            cost += chanekCost;
+            totalShares++;
         }
     }
-    
-    std::cout << cost  << std::endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        while (totalShares < n && residents[i].numberOfShares > 0)
+        {
+            cost += residents[i].costOfShare;
+            residents[i].numberOfShares--;
+            totalShares++;
+        }
+    }
+
+    std::cout << cost << std::endl;
 }
 
 void fillInput(Resident *residents, const int n)
